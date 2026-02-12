@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart, ArrowRight, ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -13,6 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import Image from "next/image";
 
 type ResponseState = "yes" | "no" | null;
 
@@ -20,6 +21,9 @@ type Step = {
   title: string;
   messages: string[];
 };
+
+const YES_GIF_URL =
+  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHJ0M2l0dmQyMGw5cXRxZzlmZ3V2M2hoanljcnRjeGJxZDk0c2tlMCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ytu2GUYbvhz7zShGwS/giphy.gif";
 
 const STEPS: Step[] = [
   {
@@ -90,8 +94,6 @@ const renderAsteriskText = (text: string) => {
 export default function Home() {
   const [step, setStep] = React.useState<number>(0);
   const [response, setResponse] = React.useState<ResponseState>(null);
-
-  // NEW: control the "No" dialog
   const [noDialogOpen, setNoDialogOpen] = React.useState<boolean>(false);
 
   const current = STEPS[step];
@@ -180,7 +182,25 @@ export default function Home() {
                         properly.
                       </p>
                     </CardHeader>
+
                     <CardContent className="space-y-4">
+                 
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.35 }}
+                        className="overflow-hidden rounded-xl border border-pink-950/15 mx-40 bg-white/60"
+                      >
+                        <Image
+                          src={YES_GIF_URL}
+                          alt="celebration"
+                          width={100}
+                          height={512}
+                          className=" w-full object-cover sm:h-72"
+                          loading="lazy"
+                        />
+                      </motion.div>
+
                       <div className="rounded-lg border border-pink-950/15 bg-pink-50/60 p-4">
                         <p className="text-base leading-relaxed text-pink-950/90">
                           {renderAsteriskText(
@@ -264,7 +284,6 @@ export default function Home() {
                       Yes
                     </Button>
 
-                    {/* CHANGED: No button opens dialog */}
                     <Button
                       onClick={() => setNoDialogOpen(true)}
                       variant="outline"
@@ -302,7 +321,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* NEW: "No" dialog */}
+      {/* "No" dialog */}
       <AlertDialog open={noDialogOpen} onOpenChange={setNoDialogOpen}>
         <AlertDialogContent className="border border-pink-950/15 bg-white/95 backdrop-blur">
           <AlertDialogHeader>
@@ -323,7 +342,6 @@ export default function Home() {
               close
             </Button>
 
-            {/* optional: if you want a "fine, yes" button */}
             <Button
               className="bg-pink-950 text-pink-50 hover:bg-pink-950/90"
               onClick={() => {
