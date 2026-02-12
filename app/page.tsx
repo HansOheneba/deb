@@ -184,19 +184,16 @@ export default function Home() {
                     </CardHeader>
 
                     <CardContent className="space-y-4">
-                 
                       <motion.div
                         initial={{ opacity: 0, scale: 0.98 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.35 }}
-                        className="overflow-hidden rounded-xl border border-pink-950/15 mx-40 bg-white/60"
+                        className="overflow-hidden rounded-xl border border-pink-950/15 bg-white/60 w-full max-w-sm mx-auto"
                       >
-                        <Image
+                        <img
                           src={YES_GIF_URL}
                           alt="celebration"
-                          width={100}
-                          height={512}
-                          className=" w-full object-cover sm:h-72"
+                          className="w-full h-auto object-contain"
                           loading="lazy"
                         />
                       </motion.div>
